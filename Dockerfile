@@ -49,7 +49,7 @@ RUN	apk update && \
 	rm -rf /var/cache/apk/*
 
 RUN mkdir /master && \
-    mv /www/data /master/data && \
+    mv /www/data /master/data \
 
 # run php composer.phar with -vvv for extra debug information
 RUN cd /var/www/html && \
