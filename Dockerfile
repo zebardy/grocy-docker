@@ -48,15 +48,14 @@ RUN	apk update && \
     rm -rf /tmp/download && \
 	rm -rf /var/cache/apk/*
 
-RUN mkdir /master && \
-    mv /www/data /master/data
-
 # run php composer.phar with -vvv for extra debug information
 RUN cd /var/www/html && \
 	php composer.phar --working-dir=/www/ -n install && \
 	cp /www/config-dist.php /www/data/config.php && \
 	cd /www && \
 	yarn install && \
+    mkdir /master && \
+    mv /www/data /master/data && \
 	chown www-data:www-data -R /www/
 
 # Set Workdir
@@ -85,6 +84,8 @@ COPY docker_nginx/conf.d/ssl.conf /etc/nginx/conf.d/ssl.conf
 COPY startup.sh /startup.sh
 
 RUN chmod a+x /startup.sh
+
+ENTRYPOINT /startup.sh
 
 # Expose volumes
 VOLUME ["/www", "/etc/nginx/conf.d", "/var/log/nginx"]
