@@ -1,6 +1,6 @@
 #/bin/sh
 
-if [[ -e /config/data ]] then;
+if [ ! -d /config/data ]; then
   cp -r /master/data /config/data
 fi
 ln -s /config/data /www/data
